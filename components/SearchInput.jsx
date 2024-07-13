@@ -17,7 +17,8 @@ const SearchInput = ({
       <TextInput
         className="flex-1 text-white font-pregular mt-0.5 text-base"
         value={value}
-        placeholder={placeholder}
+        placeholder="Search For a video topic"
+        placeholderTextColor="#CDCDE0"
         onChangeText={handleChange}
       />
 
