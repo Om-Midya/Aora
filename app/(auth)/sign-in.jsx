@@ -5,7 +5,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
+import { signIn } from "../../lib/appWrite";
+import { Alert } from "react-native";
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -13,8 +15,19 @@ const SignIn = () => {
     password: "",
   });
 
-  const submit = () => {
-    console.log(form);
+  const submit = async () => {
+    if (!form.email || !form.password) {
+      Alert.alert("Error", "Plaese fill in all the fields");
+    }
+    setIsSubmitting(true);
+    try {
+      await signIn(form.email, form.password);
+      router.replace("/home");
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
